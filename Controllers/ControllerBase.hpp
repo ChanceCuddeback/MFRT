@@ -15,9 +15,6 @@
 class ControllerBase 
 {
     public:
-        ControllerBase();
-        virtual ~ControllerBase();
-
         virtual double step(double cmd, double measurement) = 0;
         virtual void reset() = 0;
 };
