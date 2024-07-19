@@ -7,8 +7,8 @@
  */
 #ifndef PENDULUM_H
 #define PENDULUM_H
-#include <cmath> // sin
-#include <utility> // std::pair
+#include <map>
+#include <string>
 
 class Pendulum
 {
@@ -17,11 +17,10 @@ class Pendulum
 
         ~Pendulum();
 
-        std::pair<double, double> step(double cmd, double delta_t);
+        void step(double cmd, double delta_t);
         void reset();
 
-        double getAngle() const;
-        double getAngularVelocity() const;
+        std::map<std::string, double> getState() const;
 
     private:
         const double _mass;

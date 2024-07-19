@@ -3,13 +3,10 @@
 #include "Systems/Pendulum.hpp"
 #include "Controllers/PID.hpp"
 
-// #include "matplotlibcpp.h"
-
 #include <iostream>
 #include <string>
 #include <vector>
 
-// namespace plt = matplotlibcpp;
 
 static const double dt{0.01};
 static const double g{9.81};
@@ -32,7 +29,7 @@ int main()
     // Initialize the controller
     PID pid = PID(p_gain, i_gain, d_gain, dt);
 
-    // Define the simulation params
+    // Define the simulation parameters
     const double simulation_time{10.0};
     const int num_steps{static_cast<int>(simulation_time / dt)};
     
@@ -49,14 +46,14 @@ int main()
     {
         // Step the controller
         output = pid.step(cmd, measurement);
-        // Step the pendulum
-        std::pair<double, double> state{pendulum.step(output, dt)};
-        // Update the measurement
-        measurement = state.first;
-        // Write to vectors
+        // Step the system
+        pendulum.step(output, dt);
+
+        // Save the data
+        std::map<std::string, double> state = pendulum.getState();
         time.push_back(i * dt);
-        angle.push_back(state.first);
-        angular_velocity.push_back(state.second);
+        angle.push_back(state["Angle"]);
+        angular_velocity.push_back(state["Angular Velocity"]);
         command.push_back(cmd);
         output_vector.push_back(output);
     }
